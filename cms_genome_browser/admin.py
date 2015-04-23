@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cms_genome_browser.models import Browser, CoordSystem
+from cms_genome_browser.models import Browser, CoordSystem, Species
 
 class BrowserAdmin(admin.ModelAdmin):
 
@@ -78,3 +78,20 @@ class CoordSystemAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(CoordSystem, CoordSystemAdmin)
+
+
+class SpeciesAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'name',
+        'taxid',
+    )
+    list_filter = (
+        'name',
+    )
+    search_fields = (
+        'name',
+        'taxid',
+    )
+
+admin.site.register(Species, SpeciesAdmin)
