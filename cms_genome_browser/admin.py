@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cms_genome_browser.models import Browser
+from cms_genome_browser.models import Browser, CoordSystem
 
 class BrowserAdmin(admin.ModelAdmin):
 
@@ -54,3 +54,27 @@ class BrowserAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 admin.site.register(Browser, BrowserAdmin)
+
+
+class CoordSystemAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'species',
+        'auth',
+        'version',
+        'ucsc_name',
+    )
+    list_filter = (
+        'species__name',
+        'auth',
+        'ucsc_name',
+    )
+    search_fields = (
+        'species__name',
+        'species__taxid',
+        'auth',
+        'version',
+        'ucsc_name',
+    )
+
+admin.site.register(CoordSystem, CoordSystemAdmin)
