@@ -117,7 +117,7 @@ class CoordSystem(models.Model):
 class Species(models.Model):
 
     class Meta:
-        ordering = ['name']
+        ordering = ['name', 'taxid']
         verbose_name = "Species"
         verbose_name_plural = "Species"
 
