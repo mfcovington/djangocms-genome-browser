@@ -70,22 +70,23 @@ class CoordSystem(models.Model):
 
     auth = models.CharField('authority',
         blank=True,
-        help_text='Authority string used in the DAS Registry. ' \
-                  'See: http://dasregistry.org/.',
+        help_text='Authority string used in the ' \
+                  '<a href="http://dasregistry.org/" target="_blank">DAS Registry</a>.',
         max_length=10,
     )
 
     version = models.CharField('version',
         blank=True,
-        help_text='Version string used in the DAS Registry. ' \
-                  'See: http://dasregistry.org/.',
+        help_text='Version string used in the ' \
+                  '<a href="http://dasregistry.org/" target="_blank">DAS Registry</a>.',
         max_length=10,
     )
 
     ucsc_name = models.CharField('UCSC name',
         blank=True,
-        help_text='UCSC genome browser name of the assembly, if is defined. ' \
-                  'See: https://genome.ucsc.edu/FAQ/FAQreleases.html#release1.',
+        help_text='UCSC genome browser name of the assembly, if defined in the list of ' \
+                  '<a href="https://genome.ucsc.edu/FAQ/FAQreleases.html#release1" target="_blank">' \
+                  'UCSC genome releases</a>.',
         max_length=10,
         validators=[
             RegexValidator(
@@ -130,7 +131,7 @@ class Species(models.Model):
         null=True,
         help_text='Enter the Taxonomy ID for the species. ' \
                   'Taxonomy names and IDs can be found at ' \
-                  'http://www.ncbi.nlm.nih.gov/taxonomy.',
+                  '<a href="http://www.ncbi.nlm.nih.gov/taxonomy" target="_blank">NCBI</a>.',
     )
 
     def __str__(self):
