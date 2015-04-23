@@ -5,8 +5,8 @@ class Browser(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = "Genome browser"
-        verbose_name_plural = "Genome browsers"
+        verbose_name = "Genome Browser"
+        verbose_name_plural = "Genome Browsers"
 
     name = models.CharField('browser name',
         help_text='Enter a brief, descriptive name for the browser.',
