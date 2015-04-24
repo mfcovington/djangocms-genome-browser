@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, RegexValidator
 
 class Browser(models.Model):
@@ -46,7 +47,6 @@ class Browser(models.Model):
     )
 
     def clean(self):
-        from django.core.exceptions import ValidationError
         if self.start > self.end:
             raise ValidationError('Start position cannot come after end position.')
 
