@@ -1,5 +1,5 @@
 from django.contrib import admin
-from cms_genome_browser.models import Browser, CoordSystem, Species, Track
+from cms_genome_browser.models import Browser, CoordSystem, Species, Stylesheet, Track
 
 class TrackInline(admin.TabularInline):
     model = Track
@@ -104,6 +104,47 @@ class SpeciesAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(Species, SpeciesAdmin)
+
+
+class StylesheetAdmin(admin.ModelAdmin):
+
+    fieldset_basic = ('Basic Info', {
+        'fields': [
+            'name',
+            'description',
+        ],
+    })
+
+    fieldset_content = ('Stylesheet Content', {
+        'fields': [
+            'style_file',
+            'style_type',
+            'is_downloadable',
+        ],
+    })
+
+    fieldsets = [
+        fieldset_basic,
+        fieldset_content,
+    ]
+
+    list_display = (
+        'name',
+        'style_file',
+        'style_type',
+        'is_downloadable',
+    )
+    list_filter = (
+        'style_type',
+        'is_downloadable',
+    )
+    search_fields = (
+        'description',
+        'name',
+        'style_file',
+    )
+
+admin.site.register(Stylesheet, StylesheetAdmin)
 
 
 class TrackAdmin(admin.ModelAdmin):
