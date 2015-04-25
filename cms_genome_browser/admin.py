@@ -1,5 +1,10 @@
 from django.contrib import admin
-from cms_genome_browser.models import Browser, CoordSystem, Species
+from cms_genome_browser.models import Browser, CoordSystem, Species, Track
+
+class TrackInline(admin.TabularInline):
+    model = Track
+    extra = 2
+
 
 class BrowserAdmin(admin.ModelAdmin):
 
@@ -31,6 +36,10 @@ class BrowserAdmin(admin.ModelAdmin):
         fieldset_browser,
         fieldset_default_range,
         fieldset_advanced,
+    ]
+
+    inlines = [
+        TrackInline,
     ]
 
     list_display = (
@@ -95,3 +104,77 @@ class SpeciesAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(Species, SpeciesAdmin)
+
+
+class TrackAdmin(admin.ModelAdmin):
+
+    fieldset_basic = ('Basic Info', {
+        'fields': [
+            'name',
+            'description',
+            'publish_track',
+        ],
+    })
+
+    fieldset_browser = ('Genome browser', {
+        'fields': [
+            'browser',
+            'order',
+        ],
+    })
+
+    fieldset_content = ('Track Content', {
+        'fields': [
+            'track_type',
+            'data_file',
+            'bai_file',
+            'stylesheet',
+            'is_downloadable',
+        ],
+    })
+
+    fieldset_advanced = ('Advanced Settings', {
+        'fields': [
+            'collapse_super_groups',
+            'provides_entrypoint',
+            'pinned',
+        ],
+    })
+
+    fieldsets = [
+        fieldset_basic,
+        fieldset_browser,
+        fieldset_content,
+        fieldset_advanced,
+    ]
+
+    list_display = (
+        'name',
+        'track_type',
+        'data_file',
+        'stylesheet',
+        'browser',
+        'order',
+        'collapse_super_groups',
+        'provides_entrypoint',
+        'pinned',
+        'is_downloadable',
+        'publish_track',
+    )
+    list_filter = (
+        'track_type',
+        'browser',
+        'collapse_super_groups',
+        'provides_entrypoint',
+        'pinned',
+        'is_downloadable',
+        'publish_track',
+    )
+    search_fields = (
+        'data_file',
+        'description',
+        'name',
+        'stylesheet',
+    )
+
+admin.site.register(Track, TrackAdmin)
