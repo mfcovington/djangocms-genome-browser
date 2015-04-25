@@ -204,3 +204,164 @@ class Stylesheet(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Track(models.Model):
+
+    class Meta:
+        ordering = ['browser', 'order']
+        verbose_name = 'Track'
+        verbose_name_plural = 'Tracks'
+
+    TRACK_TYPE_CHOICES = (
+        ('BAM', 'BAM'),
+        ('BED', (
+                ('BED-MemStore', 'BED (MemStore)'),
+                ('BED-Tabix', 'BED (Tabix)'),
+            )
+        ),
+        ('bigWig', 'bigWig'),
+        ('bigBed', 'bigBed'),
+        ('DAS', (
+                ('DAS-feature', 'DAS (feature)'),
+                ('DAS-sequence', 'DAS (sequence)'),
+            )
+        ),
+        ('twoBit', 'twoBit'),
+        ('VCF', (
+                ('VCF-MemStore', 'VCF (MemStore)'),
+                ('VCF-Tabix', 'VCF (Tabix)'),
+            )
+        ),
+        ('WIG', 'WIG'),
+    )
+
+    order = models.PositiveIntegerField()
+
+    name = models.CharField('track name',
+        help_text='Enter a brief name for the track.',
+        max_length=64,
+    )
+
+    description = models.CharField('track description',
+        blank=True,
+        help_text='Enter a short description for the track.',
+        max_length=255,
+    )
+
+    browser = models.ForeignKey(Browser,
+        blank=True,
+        null=True,
+        help_text='Specify genome browser this track belongs to.',
+    )
+
+    track_type = models.CharField('track type',
+        choices = TRACK_TYPE_CHOICES,
+        help_text='Select the source type for this track.',
+        max_length=20,
+    )
+
+    data_file = FilerFileField(
+        help_text='Upload/select a data file for the track. More info can be found in the ' \
+                  '<a href="http://www.biodalliance.org/config-source.html" target="_blank">' \
+                  'Configuring a source</a> documentation.',
+        related_name='%(app_label)s_%(class)s_data',
+    )
+
+    bai_file = FilerFileField(
+        blank=True,
+        null=True,
+        help_text="<strong>If data file is a BAM file</strong>, upload/select " \
+                  "a BAM index (.bai) file that corresponds to the track's BAM file.",
+        related_name='%(app_label)s_%(class)s_bai',
+    )
+
+    collapse_super_groups = models.BooleanField('CSG?',
+        default=False,
+        help_text="Attempt to allow more 'gene-like' rendering for some data sources.",
+    )
+
+    provides_entrypoint = models.BooleanField('entry?',
+        default=False,
+        # What are Entry Points? http://genboree.org/theCommons/ezfaq/show/epigenome-workshop?faq_id=467
+        help_text='Does this track provide entry points? ' \
+                  'Entry points comprise the coordinate system on which annotations are made.',
+    )
+
+    pinned = models.BooleanField('pin?',
+        default=False,
+        help_text="'Pin' this trackc in the non-scrolling section at the top of the browser.",
+    )
+
+    is_downloadable = models.BooleanField('D/L?',
+        default=True,
+        help_text="Add download button for data file to the genome browser's info window.",
+    )
+
+    stylesheet = models.ForeignKey('cms_genome_browser.Stylesheet',
+        blank=True,
+        null=True,
+        help_text='Choose a stylesheet to add cusom styles to this track.',
+    )
+
+    publish_track = models.BooleanField('publish?',
+        default=True,
+        help_text='Display track in the genome browser.'
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    @property
+    def payload(self):
+        PAYLOADS = {
+            'BAM':          '',
+            'BED-MemStore': 'bed',
+            'BED-Tabix':    'bed',
+            'bigWig':       '',
+            'bigBed':       '',
+            'DAS-feature':  '',
+            'DAS-sequence': '',
+            'VCF-MemStore': 'vcf',
+            'VCF-Tabix':    'vcf',
+            'twoBit':       '',
+            'WIG':          'wig',
+        }
+        return PAYLOADS[self.track_type]
+
+    @property
+    def tier_type(self):
+        TIER_TYPES = {
+            'BAM':          '',
+            'BED-MemStore': 'memstore',
+            'BED-Tabix':    'tabix',
+            'bigWig':       '',
+            'bigBed':       '',
+            'DAS-feature':  '',
+            'DAS-sequence': 'sequence',
+            'VCF-MemStore': 'memstore',
+            'VCF-Tabix':    'tabix',
+            'twoBit':       'sequence',
+            'WIG':          'memstore',
+        }
+        return TIER_TYPES[self.track_type]
+
+    @property
+    def uri_label(self):
+        URI_LABELS = {
+            'BAM':          'bamURI',
+            'BED-MemStore': 'uri',
+            'BED-Tabix':    'uri',
+            'bigWig':       'bwgURI',
+            'bigBed':       'bwgURI',
+            'DAS-feature':  'uri',
+            'DAS-sequence': 'uri',
+            'VCF-MemStore': 'uri',
+            'VCF-Tabix':    'uri',
+            'twoBit':       'twoBitURI',
+            'WIG':          'uri',
+        }
+        return URI_LABELS[self.track_type]
+
+    def __str__(self):
+        return self.name
