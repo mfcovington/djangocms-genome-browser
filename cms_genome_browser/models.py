@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, RegexValidator
+from filer.fields.image import FilerImageField
 
 class Browser(models.Model):
 
@@ -13,6 +14,18 @@ class Browser(models.Model):
         help_text='Enter a brief, descriptive name for the browser.',
         max_length=255,
         unique=True,
+    )
+
+    description = models.TextField('browser description',
+        blank=True,
+        help_text='Enter a description for the browser.',
+    )
+
+    image = FilerImageField(
+        blank=True,
+        null=True,
+        help_text='Upload/select an image to represent this genome browser.',
+        related_name='%(app_label)s_%(class)s_browser_image',
     )
 
     slug = models.SlugField('slug',
@@ -45,6 +58,9 @@ class Browser(models.Model):
         help_text='Select a coordinate system. Taxonomy ID, authority, version, ' \
                   'and UCSC name are shown in parentheses, if present.',
     )
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def clean(self):
         if self.start > self.end:
