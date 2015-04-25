@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, RegexValidator
+from filer.fields.file import FilerFileField
 from filer.fields.image import FilerImageField
 
 class Browser(models.Model):
@@ -155,3 +156,51 @@ class Species(models.Model):
         if self.taxid:
             species_str += ' (%s)' % self.taxid
         return species_str
+
+
+class Stylesheet(models.Model):
+
+    class Meta:
+        ordering = ['name',]
+        verbose_name='Stylesheet'
+        verbose_name_plural='Stylesheets'
+
+    STYLESHEET_TYPE_CHOICES = (
+        ('XML', 'DAS XML Stylesheet'),
+        ('JSON', 'JSON-encoded Stylesheet'),
+    )
+
+    name = models.CharField('stylesheet name',
+        help_text='Enter a brief, descriptive name for this stylesheet.',
+        max_length=255,
+        unique=True,
+    )
+
+    description = models.TextField('stylesheet description',
+        blank=True,
+        help_text='Describe the style this stylesheet provides.',
+    )
+
+    style_file = FilerFileField(
+        help_text='Upload/select an image to represent this genome browser.select a stylesheet for the track. More info can be found in the ' \
+                  '<a href="https://www.biodalliance.org/stylesheets.html" target="_blank">' \
+                  'Stylesheets for Dalliance</a> documentation.',
+        related_name='%(app_label)s_%(class)s_stylesheet',
+    )
+
+    is_downloadable = models.BooleanField('stylesheet downloadable?',
+        default=True,
+        help_text="Add download button for stylesheet file to the genome browser's info window.",
+    )
+
+    style_type = models.CharField('stylesheet type',
+        choices=STYLESHEET_TYPE_CHOICES,
+        help_text='Select the type of stylesheet being used.',
+        max_length=4,
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
