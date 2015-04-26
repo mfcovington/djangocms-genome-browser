@@ -11,6 +11,8 @@ class BrowserAdmin(admin.ModelAdmin):
     fieldset_browser = ('Genome browser', {
         'fields': [
             'name',
+            'description',
+            'image',
             'coordinate_system',
         ],
     })
