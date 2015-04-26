@@ -1,0 +1,38 @@
+<script language="javascript">
+
+  new Browser({
+    chr:       '{{ browser.chr }}',
+    viewStart: {{ browser.start }},
+    viewEnd:   {{ browser.end }},
+    cookieKey: 'genome-browser-{{ browser.id }}-{{ browser.slug }}',
+    pageName:  'genome-browser-{{ browser.id }}-{{ browser.slug }}',
+
+    coordSystem: {
+      speciesName: '{{ browser.coordinate_system.species.name }}',
+
+      {% if browser.coordinate_system.species.taxid %}
+        taxon: {{ browser.coordinate_system.species.taxid }},
+      {% endif %}
+
+      auth: '{{ browser.coordinate_system.auth|default:" " }}',
+
+      {% if browser.coordinate_system.version %}
+        version: '{{ browser.coordinate_system.version }}',
+      {% endif %}
+
+      {% if browser.coordinate_system.ucsc_name %}
+        ucscName: '{{ browser.coordinate_system.ucsc_name }}',
+      {% endif %}
+    },
+
+    sources: [
+      {% for track in browser.track_set.all %}
+        {% if track.publish_track %}
+          {% include "cms_genome_browser/_track.html" %}
+        {% endif %}
+      {% endfor %}
+    ]
+
+  });
+
+</script>
