@@ -1,0 +1,37 @@
+{
+  name: '{{ track.name }}',
+
+  {% if track.description %}
+    desc: '{{ track.description }}',
+  {% endif %}
+
+  {{ track.uri_label }}: '{{ track.data_file.url }}',
+
+  {% if track.bai_file %}
+    baiURI: '{{ track.bai_file.url }}',
+  {% endif %}
+
+  {% if track.stylesheet %}
+    stylesheet_uri: '{{ track.stylesheet.style_file.url }}',
+  {% endif %}
+
+  {% if track.tier_type %}
+    tier_type: '{{ track.tier_type }}',
+  {% endif %}
+
+  {% if track.payload %}
+    payload: '{{ track.payload }}',
+  {% endif %}
+
+  {% if track.collapse_super_groups %}
+    collapseSuperGroups: true,
+  {% endif %}
+
+  {% if track.provides_entrypoint %}
+    provides_entrypoints: true,
+  {% endif %}
+
+  {% if track.pinned %}
+    pinned: true,
+  {% endif %}
+},

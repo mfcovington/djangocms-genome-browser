@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load sekizai_tags staticfiles %}
+
+{% block title %}
+  {{ browser.name }}{% if LAB_NAME %} | {{ LAB_NAME }}{% endif %}
+{% endblock title %}
+
+{% block content %}
+
+  {% addtoblock "css" strip %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms_genome_browser/app.css' %}">
+  {% endaddtoblock %}
+
+  <div class="genome-browser">
+
+    {% include "cms_genome_browser/_browser_info.html" %}
+
+    <script language="javascript" src="http://www.biodalliance.org/release-0.13/dalliance-compiled.js"></script>
+
+    {% include "cms_genome_browser/_browser_script.html" %}
+
+    <div class="container-fluid genome-browser-holder" id="genome-browser-{{ browser.id }}-{{ browser.slug }}"></div>
+
+  </div>
+
+{% endblock content %}

@@ -1,0 +1,6 @@
+include CHANGELOG
+include LICENSE
+include README.md
+recursive-include cms_genome_browser/static *
+recursive-include cms_genome_browser/templates *
+recursive-include docs *
