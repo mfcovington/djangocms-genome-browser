@@ -1,0 +1,5 @@
+Revision history for Django app djangocms-genome-browser
+
+0.1.0 2015-04-25
+
+  - A Django app for incorporating a Dalliance genome browser into a Django site with django CMS-specific features
