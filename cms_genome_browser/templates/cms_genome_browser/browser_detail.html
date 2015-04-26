@@ -11,12 +11,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'cms_genome_browser/app.css' %}">
   {% endaddtoblock %}
 
-  {% include "cms_genome_browser/_browser_info.html" %}
+  <div class="genome-browser">
 
-  <script language="javascript" src="http://www.biodalliance.org/release-0.13/dalliance-compiled.js"></script>
+    {% include "cms_genome_browser/_browser_info.html" %}
 
-  {% include "cms_genome_browser/_browser_script.html" %}
+    <script language="javascript" src="http://www.biodalliance.org/release-0.13/dalliance-compiled.js"></script>
 
-  <div class="container-fluid genome-browser-holder" id="genome-browser-{{ browser.id }}-{{ browser.slug }}"></div>
+    {% include "cms_genome_browser/_browser_script.html" %}
+
+    <div class="container-fluid genome-browser-holder" id="genome-browser-{{ browser.id }}-{{ browser.slug }}"></div>
+
+  </div>
 
 {% endblock content %}

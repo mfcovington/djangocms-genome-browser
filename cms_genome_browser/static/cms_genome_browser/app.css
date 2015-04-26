@@ -70,6 +70,6 @@ a.thumbnail:hover {
   right: 20px;
 }
 /* CMS Toolbar displaces Genome Browser Info */
-.cms-toolbar-expanded .genome-browser-info {
+.cms-toolbar-expanded .genome-browser .genome-browser-info {
   top: 90px;
 }
