@@ -1,0 +1,21 @@
+{% load sekizai_tags staticfiles thumbnail %}
+
+{% addtoblock "css" strip %}
+  <link rel="stylesheet" type="text/css" href="{% static 'cms_genome_browser/app.css' %}">
+{% endaddtoblock %}
+
+<a class="thumbnail" href="{% url 'cms_genome_browser:browser_detail' browser.slug %}">
+
+  {% if browser.image %}
+    <img class="genome-browser-image" src="{% thumbnail browser.image 600x500 crop upscale subject_location=browser.image.subject_location %}" alt="{{ browser.name }}">
+  {% else %}
+    <img src="http://placehold.it/600x500">
+  {% endif %}
+
+  <div class="caption" >
+    <h4 class="group inner list-group-item-heading text-center">
+      {{ browser.name }}
+    </h4>
+  </div>
+
+</a>

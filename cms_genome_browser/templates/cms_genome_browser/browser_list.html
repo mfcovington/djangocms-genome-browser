@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load sekizai_tags staticfiles thumbnail %}
+
+{% block content %}
+
+  <div class="container">
+    <h1 class="text-center gallery-heading">Genome Browsers</h1>
+    <div class="container-fluid">
+      <div id="genome-browsers" class="row">
+        {% for browser in browser_list %}
+          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <div class="item">
+              {% include "cms_genome_browser/_browser_info.html" %}
+              {% include "cms_genome_browser/_browser_list_item.html" %}
+            </div>
+          </div>
+        {% empty %}
+          <p>Need to add genome browsers!</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% addtoblock "js" strip %}
+    <script src="{% static 'cms_genome_browser/jquery.matchHeight-min.js' %}"></script>
+    <script src="{% static 'cms_genome_browser/app.js' %}"></script>
+  {% endaddtoblock %}
+
+{% endblock content %}

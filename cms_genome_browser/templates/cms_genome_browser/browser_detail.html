@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load sekizai_tags staticfiles %}
+
+{% block title %}
+  {{ browser.name }}{% if LAB_NAME %} | {{ LAB_NAME }}{% endif %}
+{% endblock title %}
+
+{% block content %}
+
+  {% addtoblock "css" strip %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cms_genome_browser/app.css' %}">
+  {% endaddtoblock %}
+
+  {% include "cms_genome_browser/_browser_info.html" %}
+
+  <script language="javascript" src="http://www.biodalliance.org/release-0.13/dalliance-compiled.js"></script>
+
+  <script language="javascript">
+
+    new Browser({
+      chr:       '{{ browser.chr }}',
+      viewStart: {{ browser.start }},
+      viewEnd:   {{ browser.end }},
+      cookieKey: 'genome-browser-{{ browser.id }}-{{ browser.slug }}',
+      pageName:  'genome-browser-{{ browser.id }}-{{ browser.slug }}',
+
+      coordSystem: {
+        speciesName: '{{ browser.coordinate_system.species.name }}',
+
+        {% if browser.coordinate_system.species.taxid %}
+          taxon: {{ browser.coordinate_system.species.taxid }},
+        {% endif %}
+
+        auth: '{{ browser.coordinate_system.auth|default:" " }}',
+
+        {% if browser.coordinate_system.version %}
+          version: '{{ browser.coordinate_system.version }}',
+        {% endif %}
+
+        {% if browser.coordinate_system.ucsc_name %}
+          ucscName: '{{ browser.coordinate_system.ucsc_name }}',
+        {% endif %}
+      },
+
+      sources: [
+        {% for track in browser.track_set.all %}
+          {% if track.publish_track %}
+            {% include "cms_genome_browser/_track.html" %}
+          {% endif %}
+        {% endfor %}
+      ]
+
+    });
+
+  </script>
+
+  <div class="container-fluid genome-browser-holder" id="genome-browser-{{ browser.id }}-{{ browser.slug }}"></div>
+
+{% endblock content %}
