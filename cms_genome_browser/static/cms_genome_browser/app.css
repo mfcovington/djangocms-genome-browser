@@ -76,3 +76,12 @@ a.thumbnail:hover {
 .cms-toolbar-expanded .genome-browser .genome-browser-info {
   top: 40px;
 }
+@media screen and (max-width: 767px) {
+  .genome-browser-holder {
+    margin-left: 0;
+    margin-right: 30px;
+  }
+  .genome-browser-info {
+    right: 7px;
+  }
+}
