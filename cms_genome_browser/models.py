@@ -271,8 +271,8 @@ class Track(models.Model):
     bai_file = FilerFileField(
         blank=True,
         null=True,
-        help_text="<strong>If data file is a BAM file</strong>, upload/select " \
-                  "a BAM index (.bai) file that corresponds to the track's BAM file.",
+        help_text="<strong>If data file is a BAM or Tabix file</strong>, upload/select " \
+                  "an index file (.bai or .tbi) that corresponds to the track's BAM/Tabix file.",
         related_name='%(app_label)s_%(class)s_bai',
     )
 
