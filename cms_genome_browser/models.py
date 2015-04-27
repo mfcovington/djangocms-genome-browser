@@ -268,12 +268,12 @@ class Track(models.Model):
         related_name='%(app_label)s_%(class)s_data',
     )
 
-    bai_file = FilerFileField(
+    index_file = FilerFileField(
         blank=True,
         null=True,
         help_text="<strong>If data file is a BAM or Tabix file</strong>, upload/select " \
                   "an index file (.bai or .tbi) that corresponds to the track's BAM/Tabix file.",
-        related_name='%(app_label)s_%(class)s_bai',
+        related_name='%(app_label)s_%(class)s_index',
     )
 
     collapse_super_groups = models.BooleanField('CSG?',

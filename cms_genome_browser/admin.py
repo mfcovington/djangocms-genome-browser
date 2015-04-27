@@ -170,7 +170,7 @@ class TrackAdmin(admin.ModelAdmin):
         'fields': [
             'track_type',
             'data_file',
-            'bai_file',
+            'index_file',
             'stylesheet',
             'is_downloadable',
         ],

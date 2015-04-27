@@ -7,11 +7,11 @@
 
   {{ track.uri_label }}: '{{ track.data_file.url }}',
 
-  {% if track.bai_file %}
+  {% if track.index_file %}
     {% if track.tier_type == 'tabix' %}
-      indexURI: '{{ track.bai_file.url }}',
+      indexURI: '{{ track.index_file.url }}',
     {% else %}
-      baiURI: '{{ track.bai_file.url }}',
+      baiURI: '{{ track.index_file.url }}',
     {% endif %}
   {% endif %}
 
