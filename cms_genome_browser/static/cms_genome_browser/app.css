@@ -69,10 +69,10 @@ a.thumbnail:hover {
   margin: 0 50px;
 }
 .genome-browser-info {
-  top: 60px;
+  top: 10px;
   right: 20px;
 }
 /* CMS Toolbar displaces Genome Browser Info */
 .cms-toolbar-expanded .genome-browser .genome-browser-info {
-  top: 90px;
+  top: 40px;
 }
