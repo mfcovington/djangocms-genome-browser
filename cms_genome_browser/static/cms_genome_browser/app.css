@@ -65,6 +65,9 @@ a.thumbnail:hover {
 /* Genome Browser Detail View */
 /******************************/
 
+.genome-browser-holder {
+  margin: 0 50px;
+}
 .genome-browser-info {
   top: 60px;
   right: 20px;
