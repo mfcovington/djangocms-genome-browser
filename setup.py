@@ -44,7 +44,7 @@ install_requires = [
 
 setup(
     name='djangocms-genome-browser',
-    version='0.1.0',
+    version='0.1.1',
     packages=['cms_genome_browser'],
     include_package_data=True,
     license='BSD License',
