@@ -268,12 +268,12 @@ class Track(models.Model):
         related_name='%(app_label)s_%(class)s_data',
     )
 
-    bai_file = FilerFileField(
+    index_file = FilerFileField(
         blank=True,
         null=True,
-        help_text="<strong>If data file is a BAM file</strong>, upload/select " \
-                  "a BAM index (.bai) file that corresponds to the track's BAM file.",
-        related_name='%(app_label)s_%(class)s_bai',
+        help_text="<strong>If data file is a BAM or Tabix file</strong>, upload/select " \
+                  "an index file (.bai or .tbi) that corresponds to the track's BAM/Tabix file.",
+        related_name='%(app_label)s_%(class)s_index',
     )
 
     collapse_super_groups = models.BooleanField('CSG?',
@@ -362,6 +362,21 @@ class Track(models.Model):
             'WIG':          'uri',
         }
         return URI_LABELS[self.track_type]
+
+    def clean(self):
+        if self.index_file == None:
+            if self.track_type == 'BAM':
+                raise ValidationError("Must upload/select BAM index (.bai) " \
+                                      "file for '{}'.".format(self.data_file))
+            if self.tier_type == 'tabix':
+                raise ValidationError("Must upload/select Tabix index (.tbi) " \
+                                      "file for '{}'.".format(self.data_file))
+        else:
+            if self.track_type != 'BAM' and self.tier_type != 'tabix':
+                raise ValidationError("Index files are only needed if data file is " \
+                                      "BAM, BED (Tabix), or VCF (Tabix). " \
+                                      "Please remove index file '{}' or switch data file type." \
+                                      .format(self.index_file))
 
     def __str__(self):
         return self.name

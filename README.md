@@ -67,4 +67,4 @@ CMS Genome Browser is A Django app for incorporating a [Dalliance genome browser
 
 - Create a CMS page and attach the `Genome Browser App` under `Advanced Settings` for the page.
 
-*Version 0.1.0*
+*Version 0.1.1*
