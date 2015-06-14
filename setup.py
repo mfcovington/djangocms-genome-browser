@@ -1,6 +1,10 @@
 import os
 from setuptools import setup
 
+if sys.version_info < (3, 2):
+    print("Sorry, django-taggit-helpers currently requires Python 3.2+.")
+    sys.exit(1)
+
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
 
