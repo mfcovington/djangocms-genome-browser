@@ -12,6 +12,42 @@
       indexURI: '{{ track.index_file.url }}',
     {% else %}
       baiURI: '{{ track.index_file.url }}',
+      "style": [
+        {
+          "type": "density",
+          "zoom": "low",
+          "style": {
+            "glyph": "HISTOGRAM",
+            "COLOR1": "black",
+            "COLOR2": "red",
+            "HEIGHT": 30
+          }
+        },
+        {
+          "type": "density",
+          "zoom": "medium",
+          "style": {
+            "glyph": "HISTOGRAM",
+            "COLOR1": "black",
+            "COLOR2": "red",
+            "HEIGHT": 30
+          }
+        },
+        {
+          "type": "bam",
+          "zoom": "high",
+          "style": {
+            "glyph": "__SEQUENCE",
+            "FGCOLOR": "black",
+            "BGCOLOR": "blue",
+            "HEIGHT": 8,
+            "BUMP": true,
+            "LABEL": false,
+            "ZINDEX": 20,
+            "__SEQCOLOR": "mismatch"
+          }
+        }
+      ]
     {% endif %}
   {% endif %}
 
