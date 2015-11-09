@@ -2,8 +2,6 @@
 
 CMS Genome Browser is A Django app for incorporating a [Dalliance genome browser(https://github.com/dasmoth/dalliance) into a Django site with django CMS-specific features.
 
-<!-- Detailed documentation is in the "docs" directory. -->
-
 ## Quick start
 
 - Edit the project's `settings.py` file.
