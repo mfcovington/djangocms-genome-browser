@@ -1,4 +1,4 @@
-include CHANGELOG
+include CHANGELOG.rst
 include LICENSE
 include README.md
 recursive-include cms_genome_browser/static *
