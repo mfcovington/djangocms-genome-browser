@@ -18,13 +18,6 @@ CMS Genome Browser is A Django app for incorporating a [Dalliance genome browser
         )
         ```
 
-    - Specify your media settings, if not already specified:
-
-        ```python
-        MEDIA_URL = '/media/'
-        MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-        ```
-
     - Add `easy_thumbnail` settings: 
 
         ```python
